@@ -8,6 +8,7 @@ import { AuthProvider } from './app/core/services/AuthService';
 import { Profile } from "./app/features/profile/Profile";
 import { Home } from "./app/features/home/Home";
 import { RadioBoard } from "./app/features/themes/radio-board/RadioBoard";
+import { ThemeBoard } from "./app/features/themes/theme-board/ThemeBoard";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path='/profile' element={<Profile />} />
         <Route path='/home' element={<Home />} />
         <Route path='/radio' element={<RadioBoard />} />
+        <Route path='/songs' element={<ThemeBoard artistId={27}/>} />
             {/* <li><Link to="/songs">Deezer Songs</Link></li>
               <li><Link to="/songs2">Jamendo Songs</Link></li>
               <li><Link to="/change-song">New Deezer Artist</Link></li>
