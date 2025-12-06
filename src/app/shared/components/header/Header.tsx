@@ -1,10 +1,10 @@
-import './header.css';
+import "./header.css";
 
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import './header.css';
-import { Clock } from './clock/clock/Clock';
-import { useAuth } from '../../../core/services/AuthService';
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import "./header.css";
+import { Clock } from "./clock/clock/Clock";
+import { useAuth } from "../../../core/services/AuthService";
 
 // Example AuthService hook replacement
 // Replace with your actual auth context/service
@@ -32,7 +32,7 @@ export function Header() {
   const handleLogout = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     logout();
-    navigate('/home');
+    navigate("/home");
   };
 
   return (
@@ -50,13 +50,19 @@ export function Header() {
                   <Link to="/profile">{currentUser?.username}'s profile</Link>
                 </li>
                 <li>
-                  <a href="#" onClick={handleLogout}>Logout</a>
+                  <a href="#" onClick={handleLogout}>
+                    Logout
+                  </a>
                 </li>
               </>
             ) : (
               <>
-                <li><Link to="/login">Login</Link></li>
-                <li><Link to="/register">Register</Link></li>
+                <li>
+                  <Link to="/login">Login</Link>
+                </li>
+                <li>
+                  <Link to="/register">Register</Link>
+                </li>
               </>
             )}
           </ul>
@@ -67,17 +73,31 @@ export function Header() {
           </ul>
         </div>
       </div>
-      <nav>
-        <ul>
-          <li><Link to="/home">Home</Link></li>
+      <nav className="main-nav">
+        <ul className="nav-list">
+          <li>
+            <Link to="/home">Home</Link>
+          </li>
           {isLoggedIn && (
             <>
-              <li><Link to="/songs">Deezer Songs</Link></li>
-              <li><Link to="/songs2/9">Jamendo Songs</Link></li>
-              <li><Link to="/change-song">New Deezer Artist</Link></li>
-              <li><Link to="/change-song2">New Jamendo Artist</Link></li>
-              <li><Link to="/artists">All Artists</Link></li>
-              <li><Link to="/radio">Radio mix</Link></li>
+              <li>
+                <Link to="/songs">Deezer Songs</Link>
+              </li>
+              <li>
+                <Link to="/songs2/9">Jamendo Songs</Link>
+              </li>
+              <li>
+                <Link to="/change-song">New Deezer Artist</Link>
+              </li>
+              <li>
+                <Link to="/change-song2">New Jamendo Artist</Link>
+              </li>
+              <li>
+                <Link to="/artists">All Artists</Link>
+              </li>
+              <li>
+                <Link to="/radio">Radio mix</Link>
+              </li>
             </>
           )}
         </ul>
