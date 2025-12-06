@@ -1,142 +1,116 @@
-/* Target input inside .field */
+/* Validation borders */
 .field input.ng-valid {
-    border-left: 5px solid #42A948;
-    /* green */
+  border-left: 5px solid #42A948; /* green */
 }
 
-/* Only show red border if touched AND invalid */
 .field input.ng-invalid.ng-touched {
-    border-left: 5px solid #A94442;
-    /* red */
+  border-left: 5px solid #A94442; /* red */
 }
 
-/* Optional: Style the icon red when invalid */
 .field .text-danger {
-    color: #A94442 !important;
+  color: #A94442 !important;
 }
 
+/* Register container */
 .register {
-    width: 40%;
-    margin: 2em auto 0;
-    text-align: center;
-    background-color: #e4e3e3;
-    border-radius: 1em;
-    padding: 1em;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px;              /* ✅ same width as login */
+  margin: 2rem auto;
+  padding: 2rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: white;
 }
 
 .register fieldset {
-    border-radius: 0.5em;
-    padding: 1em;
-    background-color: #ffffff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border: none;
+  border: none;
+  padding: 0;
 }
 
 .register h2 {
-    padding-top: 0;
-    border-bottom: none;
-    color: #234465;
-    font-size: 1.8em;
-    margin-bottom: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #333;
 }
 
-.register p {
-    padding-bottom: 0;
-    padding-top: 1.5rem;
-    color: #333;
+/* Field wrapper */
+.field {
+  position: relative;
+  margin-bottom: 1.5rem;
 }
 
-.register input,
+.field-icon {
+  display: flex;
+  align-items: center;
+}
+
+/* Icon label positioned inside input */
+.field-icon label {
+  position: absolute;
+  left: 1rem;
+  color: #666;
+  pointer-events: none; /* ✅ prevents blocking input clicks */
+}
+
+.field-icon input,
 .register select {
-    flex: 0 1 100%;
-    border: 1px solid #999;
-    padding: 0.4em;
-    border-left: 0.4em solid green;
-    border-top-right-radius: 0.5em;
-    border-bottom-right-radius: 0.5em;
-    font-size: 1em;
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 3rem; /* ✅ space for icon */
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
 }
 
+/* Select styling */
 .register select {
-    border-color: #333;
-    padding: 0.3em;
-    border-radius: 0.3em;
+  border-color: #333;
 }
 
-.register button {
-    background-color: #a7eb0b;
-    color: white;
-    border: none;
-    border-radius: 0.5em;
-    padding: 0.7em 1.5em;
-    margin-top: 1.5rem;
-    width: 60%;
-    outline: none;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-}
-
-.register button:hover:not(:disabled) {
-    transform: scale(1.05);
-    background-color: #42A948;
-}
-
-.register button:disabled {
-    background-color: #6c757d;
-    cursor: not-allowed;
-    transform: none;
-}
-
-.register i {
-    border: 1px solid #999;
-    border-right: none;
-    padding: 0.55em;
-    border-top-left-radius: 0.5em;
-    border-bottom-left-radius: 0.5em;
-    background-color: #e9ecef;
-}
-
-.register a {
-    color: #234465;
-    text-decoration: none;
-}
-
-.register a:hover {
-    cursor: pointer;
-    text-decoration: underline;
-}
-
-.register .tel {
-    padding-right: 0.8em;
-}
-
-.register .field {
-    display: flex;
-    padding-bottom: 0.5em;
-    align-items: center;
-}
-
-.register .field input {
-    margin-left: 0.5em;
+/* Error styles */
+.input-error {
+  border-color: #dc3545 !important;
 }
 
 .error {
-    text-align: left;
-    border-radius: 0.5em;
-    color: red;
-    padding-top: 0;
-    font-weight: bold;
-    font-size: 0.875rem;
-    margin-top: 0.25rem;
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  text-align: left;
 }
 
-.input-error {
-    border-left-color: red !important;
-    border-color: red;
+/* Buttons */
+.register button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #2fff00;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  transition: background-color 0.2s ease;
 }
 
+.register button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.register button:hover:not(:disabled) {
+  background-color: #e9f511;
+}
+
+/* Links */
 .text-center {
-    text-align: center;
-    margin: 0;
+  text-align: center;
+  margin: 0;
+}
+
+.text-center a {
+  color: #000dff;
+  text-decoration: none;
+}
+
+.text-center a:hover {
+  text-decoration: underline;
 }
