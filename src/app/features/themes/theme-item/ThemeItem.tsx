@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import type { Song } from '../../../models/song.model';
-import { updateSong, deleteSong } from '../../../core/services/useSongs'; // ✅ service helpers
+import { updateSong, deleteSong, getSongsWithIDMongoDB } from '../../../core/services/useSongs'; // ✅ service helpers
 import './theme-item.css';
 
 interface ThemeItemProps {
   song: Song;
   variant?: 'compact' | 'full';
   onSongUpdated?: (song: Song) => void;
+  onSongDeleted?: (songId: number) => void;   // ✅ FIXED: new prop
 }
 
-export const ThemeItem: React.FC<ThemeItemProps> = ({ song, variant = 'full', onSongUpdated }) => {
+export const ThemeItem: React.FC<ThemeItemProps> = ({ song, variant = 'full', onSongUpdated, onSongDeleted }) => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [artistName, setArtistName] = useState(song.artist.name);
   const [albumTitle, setAlbumTitle] = useState(song.album.title);
@@ -25,9 +26,18 @@ export const ThemeItem: React.FC<ThemeItemProps> = ({ song, variant = 'full', on
           // 🔧 FIXED: unwrap .data from AxiosResponse
       const updatedSong = await updateSong(song._id, updatedData);   // ✅ returns AxiosResponse
     //   const updatedSong: Song = response.data;                    // ✅ FIXED LINE
+
+     // ✅ FIXED: immediately re-fetch fresh song from MongoDB
+      const freshSongs = await getSongsWithIDMongoDB(song.artist.id);
+      const freshSong = freshSongs.find(s => s._id === song._id);
       
       setIsEditMode(false);
-      onSongUpdated?.(updatedSong);
+
+
+        if (freshSong) {
+        onSongUpdated?.(freshSong); // ✅ FIXED: pass fresh DB record to parent
+      }
+
     } catch (err) {
       console.error('Update failed', err);
     }
@@ -38,6 +48,7 @@ export const ThemeItem: React.FC<ThemeItemProps> = ({ song, variant = 'full', on
       try {
         await deleteSong(song._id);
         alert('Song deleted successfully!');
+        onSongDeleted?.(song._id);   // ✅ FIXED: notify parent to update DOM
       } catch (err) {
         console.error('Delete failed', err);
       }

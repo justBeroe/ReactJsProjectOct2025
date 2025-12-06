@@ -73,7 +73,7 @@ export function Header() {
           {isLoggedIn && (
             <>
               <li><Link to="/songs">Deezer Songs</Link></li>
-              <li><Link to="/songs2">Jamendo Songs</Link></li>
+              <li><Link to="/songs2/9">Jamendo Songs</Link></li>
               <li><Link to="/change-song">New Deezer Artist</Link></li>
               <li><Link to="/change-song2">New Jamendo Artist</Link></li>
               <li><Link to="/artists">All Artists</Link></li>

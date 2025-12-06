@@ -9,6 +9,10 @@ import { Profile } from "./app/features/profile/Profile";
 import { Home } from "./app/features/home/Home";
 import { RadioBoard } from "./app/features/themes/radio-board/RadioBoard";
 import { ThemeBoard } from "./app/features/themes/theme-board/ThemeBoard";
+import { ThemeBoard2 } from "./app/features/themes/song2-board/ThemeBoard2";
+import { NewTheme } from "./app/features/themes/new-theme/NewTheme";
+import { NewTheme2 } from "./app/features/themes/new-song2/NewTheme2";
+import { ArtistBoard } from "./app/features/themes/artist-board/ArtistBoard";
 
 function App() {
   return (
@@ -22,7 +26,15 @@ function App() {
         <Route path='/profile' element={<Profile />} />
         <Route path='/home' element={<Home />} />
         <Route path='/radio' element={<RadioBoard />} />
-        <Route path='/songs' element={<ThemeBoard artistId={27}/>} />
+        <Route path='/songs' element={<ThemeBoard />} />
+        {/* <Route path='/songs2' element={<ThemeBoard2 />} /> */}
+        <Route path='/change-song' element={<NewTheme />} />
+        <Route path='/change-song2' element={<NewTheme2 />} />
+         {/* ✅ Route for songs by artistId */}
+        <Route path="/songs/:artistId" element={<ThemeBoard/>} />
+        <Route path="/songs2/:artistId" element={<ThemeBoard2/>} />
+        <Route path="/artists" element={<ArtistBoard />} />
+
             {/* <li><Link to="/songs">Deezer Songs</Link></li>
               <li><Link to="/songs2">Jamendo Songs</Link></li>
               <li><Link to="/change-song">New Deezer Artist</Link></li>
