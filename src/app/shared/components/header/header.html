@@ -1,0 +1,59 @@
+<header>
+    <div class="mini-navbar-wrap">
+        <div class="logo-wrap">
+            <img src="logo1.png">
+            <p class="logo">Song shop</p>
+        </div>
+        <div class="mini-navbar">
+            <ul>
+                @if (isLoggedIn()) {
+                <li>
+                    <a routerLink="/profile">{{ currentUser()?.username }}'s profile</a>
+                </li>
+                <li>
+                    <!-- <a href="#" >Logout</a> -->
+                    <a href="#" (click)="logout()">Logout</a>
+                </li>
+                } @else {
+                <li>
+                    <a routerLink="/login">Login</a>
+                </li>
+                <li>
+                    <a routerLink="/register">Register</a>
+                </li>
+                }
+            </ul>
+            <ul>
+                <app-clock></app-clock>
+            </ul>
+        </div>
+    </div>
+    <nav>
+        <ul>
+            <li>
+                <a routerLink="/home">Home</a>
+            </li>
+
+            @if (isLoggedIn()) {
+            <li>
+                <a routerLink="/songs">Deezer Songs</a>
+            </li>
+            <li>
+                <a routerLink="/songs2">Jamendo Songs</a>
+            </li>
+            <li>
+                <a routerLink="/change-song">New Deezer Artist</a>
+            </li>
+            <li>
+                <a routerLink="/change-song2">New Jamendo Artist</a>
+            </li>
+            <li>
+                <a routerLink="/artists">All Artists</a>
+            </li>
+            <li>
+                <a routerLink="/radio">Radio mix</a>
+            </li>
+            }
+        </ul>
+    </nav>
+</header>

@@ -1,0 +1,19 @@
+<div class="theme-container">
+    <div class="theme-name-wrapper">
+        <div class="theme-name">
+            <a href="#" class="normal">
+                <h2>{{artist.name}} </h2>
+            </a>
+            <div class="columns">
+                <div [ngClass]="variant">
+                    <p><a [routerLink]="['/songs', artist.id]">
+                            Artist id: <time>{{ artist.id }}</time>
+                        </a>
+                    </p>
+                </div>
+                <app-comment-box [artistId]="artist.id"></app-comment-box>
+            </div>
+        </div>
+
+    </div>
+</div>

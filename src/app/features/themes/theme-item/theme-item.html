@@ -1,0 +1,60 @@
+<div class="theme-container">
+
+    @if(!isEditMode) {
+    <div class="theme-name-wrapper">
+        <div class="theme-name">
+            <a href="#" class="normal">
+                <h2>{{song.title}} </h2>
+                <h2>{{song._id}} </h2>
+            </a>
+            <div class="columns">
+                <div [ngClass]="variant">
+                    <p>Artist name: <time>{{song.artist.name}}</time></p>
+                    <div class="nick-name">
+                        <p>Album title: <span>{{song.album.title}}</span></p>
+                    </div>
+                    <!-- ✅ AUDIO PREVIEW -->
+                    <div class="audio-preview">
+                        <p>Preview:</p>
+                        <audio *ngIf="song.preview" controls [src]="song.preview">
+                            Your browser does not support the audio element.
+                        </audio>
+                        <!-- <p>Album cover: <a href="{{ theme.album.cover }}" target="_blank" rel="noopener noreferrer">{{ theme.album.cover }}</a></p> -->
+                        <p>Album cover:</p>
+                        <p>
+                            <a href="{{ song.album.cover }}" target="_blank" rel="noopener noreferrer">
+                                <img [src]="song.album.cover" alt="Album Cover" style="max-width: 100px; height: auto;">
+                            </a>
+                        </p>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="subscribers">
+                <!-- <button class="subscribe">Subscribe</button> -->
+                <p>Artist ID: <span>{{song.artist.id}}</span></p>
+                <!-- ✅ Edit & Delete Buttons -->
+                <button (click)="onEdit()">Edit</button>
+                <button (click)="deleteSong(song._id)">Delete</button>
+            </div>
+        </div>
+    </div>
+} @else {
+    <!-- <p>test</p> -->
+     <form [formGroup]="editForm" (ngSubmit)="onSave()">
+      <div>
+        <label>Artist Name:</label>
+        <input type="text" formControlName="artistName" />
+      </div>
+      <div>
+        <label>Album Title:</label>
+        <input type="text" formControlName="albumTitle" />
+      </div>
+      <div class="button-container">
+        <button type="button" (click)="onCancel()">Cancel</button>
+        <button type="submit">Save</button>
+      </div>
+    </form>
+}
+</div>

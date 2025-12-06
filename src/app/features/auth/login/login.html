@@ -1,0 +1,40 @@
+<form class="login" [formGroup]="loginFormGroup" (ngSubmit)="onSubmit()">
+    <fieldset>
+        <h2>Login</h2>
+
+        <p class="field field-icon">
+            <label for="email"><span><i class="fas fa-envelope" [class.text-danger]="loginFormGroup.get('email')?.invalid && loginFormGroup.get('email')?.touched"></i></span></label>
+            <input  type="email" name="email" id="email"
+                 formControlName="email" >
+                <!-- (blur)="validateEmail()" -->
+                 <!-- placeholder="dobromirtt@gmail.com" -->
+        </p>
+         @if(loginFormGroup.get('email')?.invalid && loginFormGroup.get('email')?.touched ){
+            <div class="alert alert-danger">
+                Email is required!
+            </div>
+            }
+
+        <p class="field field-icon">
+            <label for="password"><span><i class="fas fa-lock"  [class.text-danger]="loginFormGroup.get('password')?.invalid && loginFormGroup.get('password')?.touched"></i></span></label>
+            <!-- <label for="password"><span><i class="fas fa-lock" style="color: red;"></i></span></label> -->
+            <input  type="password" name="password" id="password" placeholder="******"
+                formControlName="password" >
+        </p>
+
+            @if(loginFormGroup.get('password')?.invalid && loginFormGroup.get('password')?.touched ){
+            <div class="alert alert-danger">
+                Password is required!
+            </div>
+            }
+       
+
+        <!-- <button >Login</button> -->
+        <button [disabled]="loginFormGroup.invalid">Login</button>
+
+        <p class="text-center">
+            Have an account?
+            <a routerLink="/register">Register</a>
+        </p>
+    </fieldset>
+</form>

@@ -1,0 +1,15 @@
+<h3>String Observable:</h3>
+<!-- @if (stringObservable$ | async as str) {
+  <p>First: {{ str }}</p>
+} -->
+
+<!-- <p *ngIf="stringObservable$ | async as str">{{ str }}</p> -->
+
+<!-- @if (stringObservable$ | async as str ) {
+  <p>{{ str }}</p>
+}  -->
+
+  <div>
+      <!-- Using async pipe to display the observable value -->
+      <p>{{ stringObservable$ | async }}</p>
+    </div>

@@ -1,0 +1,36 @@
+<div class="theme-container">
+  <div class="theme-name-wrapper">
+    <div class="theme-name">
+      <!-- Station header -->
+      <a href="{{ station.url }}" target="_blank" class="normal">
+        <h2>{{ station.name }}</h2>
+      </a>
+
+      <div class="columns">
+        <div [ngClass]="variant">
+          <!-- Station info -->
+          <p>Country: <time>{{ station.country }}</time></p>
+          <div class="nick-name">
+            <p>Favicon:</p>
+            <p>
+              <img *ngIf="station.favicon" [src]="station.favicon" [alt]="station.name" style="max-width: 100px; height: auto;" />
+            </p>
+          </div>
+
+          <!-- Audio preview -->
+          <div class="audio-preview">
+            <p>Listen:</p>
+            <audio *ngIf="station.url" controls [src]="station.url">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+        </div>
+      </div>
+
+      <div class="subscribers">
+        <!-- Optional extra info -->
+        <!-- <p>Station ID: <span>{{ station.stationuuid }}</span></p> -->
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,85 @@
+.fetch-btn-container {
+  display: flex;
+  justify-content: flex-end; /* align items to the right */
+  gap: 10px; /* space between buttons and input */
+  margin-bottom: 1rem;
+  align-items: center;
+}
+
+/* Buttons common styling */
+.fetch-btn,
+.delete-btn,
+.search-btn {
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Fetch button - green */
+.fetch-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.fetch-btn:hover {
+  background-color: #218838;
+  transform: scale(1.05);
+}
+
+.fetch-btn:active {
+  background-color: #1e7e34;
+  transform: scale(0.98);
+}
+
+/* Delete button - red */
+.delete-btn {
+  background-color: #dc3545;
+  color: white;
+  margin-top: 5px;
+  margin-right: 15px;
+}
+
+.delete-btn:hover {
+  background-color: #c82333;
+  transform: scale(1.05);
+}
+
+.delete-btn:active {
+  background-color: #bd2130;
+  transform: scale(0.98);
+}
+
+/* Search input styling */
+.search-input {
+  padding: 0.5rem 0.8rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.2s ease;
+}
+
+.search-input:focus {
+  border-color: #28a745;
+  box-shadow: 0 0 4px rgba(40, 167, 69, 0.5);
+}
+
+/* Search button - blue */
+.search-btn {
+  background-color: #28a745;
+  color: white;
+  margin-right: 15px
+}
+
+.search-btn:hover {
+  background-color: #28a745;
+  transform: scale(1.05);
+}
+
+.search-btn:active {
+  background-color: #28a745;
+  transform: scale(0.98);
+}

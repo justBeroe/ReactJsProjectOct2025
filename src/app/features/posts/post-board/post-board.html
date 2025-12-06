@@ -1,0 +1,19 @@
+<div class="aside">
+    <h2 class="title">
+        Recent posts
+    </h2>
+    <div>
+        <!-- @for (postItem of posts ; track postItem.id) { -->
+        <!-- @for (post of posts$ | async; track post.id) { -->
+        <!-- <app-post-item [post]="postItem"></app-post-item>
+        } -->
+        @for (post of posts$ | async; track post.id) {
+        <app-post-item [post]="post"></app-post-item>
+        }
+        @empty {
+        <p>Loading elements ... </p>
+        }
+        <!-- Debug output -->
+        <pre>{{ posts$ }}</pre>
+    </div>
+</div>

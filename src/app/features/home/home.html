@@ -1,0 +1,28 @@
+<div class="welcome">
+<h3>Welcome to Songshop!</h3>
+<p>Your go-to place for discovering, buying, and enjoying the best music MP3s. Browse our collection, preview tracks, and purchase your favorite songs easily and securely.</p>
+
+
+  @if (!isLoggedIn()) {
+  <div class="logged">
+    <ul>
+      <li>
+        <a routerLink="/login">
+          <i class="fas fa-sign-in-alt"></i>
+          Login
+        </a>
+      </li>
+      <li>
+        <a routerLink="/register">
+          <i class="fas fa-user-plus"></i>
+          Register
+        </a>
+      </li>
+    </ul>
+  </div>
+  } @else {
+  <div class="logged">
+    <p>Welcome back, {{ currentUser()?.username }}!</p>
+  </div>
+  }
+</div>

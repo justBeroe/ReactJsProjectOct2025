@@ -1,0 +1,53 @@
+header ul {
+  display: flex;             /* horizontal layout */
+  gap: 1rem;                 /* space between items */
+  padding: 0;                /* remove default ul padding */
+  margin: 0;                 /* remove default ul margin */
+  list-style: none;          /* remove bullets */
+  justify-content: center;   /* center horizontally */
+  background-color: transparent; /* optional dark background for contrast */
+  border-radius: 12px;
+  max-width: 90vw;
+  margin: 1rem auto;         /* center ul with margin */
+}
+
+header li {
+  background-color: #2fff00; /* bright green */
+  padding: 0.6em 1.2em;
+  border-radius: 20px;
+  text-align: center;
+  color: #1a1a1a;            /* dark text for contrast */
+  font-weight: 600;
+  font-size: 1rem;
+  box-shadow: 1px 1px 5px rgba(0,0,0,0.2);
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  min-width: 100px;
+}
+
+header li:hover {
+ 
+  transform: scale(1.05);
+  box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+}
+
+header li:active {
+  transform: scale(0.98);
+  box-shadow: none;
+}
+a {
+    font-size: small;
+  display: inline-block;    /* ensures padding and width work properly */
+        /* some padding inside */
+  border-radius: 12px;      /* rounded corners */
+  background-color: #2fff00;
+  color: #058521;
+  font-weight: bold;
+  text-align: center;
+  white-space: normal;      /* allows text to wrap instead of overflowing */
+  word-wrap: break-word;    /* breaks long words to next line */
+  overflow-wrap: break-word;
+  max-width: 100%;          /* don't exceed parent's width */
+  box-sizing: border-box;   /* include padding & border in width */
+}

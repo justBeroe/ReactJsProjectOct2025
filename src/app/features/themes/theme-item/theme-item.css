@@ -1,0 +1,14 @@
+.compact {
+    color: white;
+}
+
+.audio-preview {
+  /* display: flex; */
+  flex: 1 1 calc(50% - 20px);
+  flex-direction: row; /* stack vertically */
+  align-items:center;    /* center horizontally */
+  gap: 18px;               /* space between elements */
+  /* text-align: center;  */
+      /* center text */
+      
+}

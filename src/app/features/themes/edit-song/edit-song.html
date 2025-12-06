@@ -1,0 +1,17 @@
+<div class="edit-song-form">
+  <label>
+    Song Title:
+    <input [(ngModel)]="song.title" />
+  </label>
+  <label>
+    Artist Name:
+    <input [(ngModel)]="song.artist.name" />
+  </label>
+  <label>
+    Album Title:
+    <input [(ngModel)]="song.album.title" />
+  </label>
+
+  <button (click)="saveChanges()">Save</button>
+  <button (click)="cancelEdit()">Cancel</button>
+</div>

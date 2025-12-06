@@ -1,0 +1,88 @@
+<form class="register" [formGroup]="registerFormGroup" (ngSubmit)="onSubmit()">
+  <fieldset>
+    <h2>Registration Form</h2>
+
+    <!-- username -->
+    <p class="field field-icon">
+      <label for="username"><span><i class="fas fa-user"
+            [class.text-danger]="registerFormGroup.get('username')?.invalid && registerFormGroup.get('username')?.touched"></i></span></label>
+      <input type="text" id="username" placeholder="SAMO Beroe" name="username" formControlName="username">
+    </p>
+    <!-- minlength="5" -->
+
+    @if(registerFormGroup.get('username')?.invalid && registerFormGroup.get('username')?.touched ){
+    <div class="alert alert-danger">
+      Username is required!
+    </div>
+    }
+
+    <!-- Show message if whitespace validator triggered -->
+    @if (registerFormGroup.get('username')?.hasError('whitespace')
+    && registerFormGroup.get('username')?.touched) {
+    <div class="alert alert-danger">
+      Username cannot be empty or just spaces.
+    </div>
+    }
+
+    <!-- email -->
+    <p class="field field-icon">
+      <label for="email"><span><i class="fas fa-envelope"
+            [class.text-danger]="registerFormGroup.get('email')?.invalid && registerFormGroup.get('email')?.touched"></i></span></label>
+      <input type="email" id="email" placeholder="admin@beroe.bg" name="email" formControlName="email">
+    </p>
+    @if(registerFormGroup.get('email')?.invalid && registerFormGroup.get('email')?.touched ){
+    <div class="alert alert-danger">
+      Email is required!
+    </div>
+    }
+
+    <!-- telephone -->
+    <!-- <p class="field field-icon">
+      <label for="tel"><span><i class="fas fa-phone"></i></span></label>
+      <select name="select-tel" id="select-tel" class="tel" [(ngModel)]="phone">
+        <option value="00359">+359</option>
+      </select>
+      <input type="text" id="tel" placeholder="885 888 888" [(ngModel)]="phone" name="phone">
+    </p> -->
+
+    <div>
+      <!-- password -->
+      <p class="field field-icon">
+        <label for="password"><span><i class="fas fa-lock"
+              [class.text-danger]="registerFormGroup.get('password')?.invalid && registerFormGroup.get('password')?.touched"></i></span></label>
+        <input type="password" id="password" placeholder="******" name="password" formControlName="password">
+      </p>
+      @if(registerFormGroup.hasError('passwordsMismatch') ){
+      <div class="alert alert-danger">
+        Passwords do not match.
+      </div>
+      }
+
+         <!-- Show message if whitespace validator triggered -->
+    @if (registerFormGroup.get('password')?.hasError('whitespace')
+    && registerFormGroup.get('password')?.touched) {
+    <div class="alert alert-danger">
+      Password cannot be empty or just spaces.
+    </div>
+    }
+
+
+      <!-- rePassword -->
+      <p class="field field-icon">
+        <label for="rePassword"><span>
+            <i class="fas fa-lock"
+              [class.text-danger]="registerFormGroup.get('rePassword')?.invalid && registerFormGroup.get('rePassword')?.touched"></i></span></label>
+        <input type="password" id="rePassword" placeholder="******" name="rePassword" formControlName="rePassword">
+      </p>
+
+    </div>
+
+    <!-- <button>Create Account</button> -->
+    <button class="btn btn-primary" [disabled]="registerFormGroup.invalid">Create Account</button>
+
+    <p class="text-center">
+      Have an account?
+      <a routerLink="/login">Log In</a>
+    </p>
+  </fieldset>
+</form>
