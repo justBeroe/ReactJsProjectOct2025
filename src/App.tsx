@@ -33,6 +33,7 @@ function App() {
         <Route path='/change-song2' element={<NewTheme2 />} />
          {/* ✅ Route for songs by artistId */}
         <Route path="/songs/:artistId" element={<ThemeBoard/>} />
+        <Route path="/songs2" element={<ThemeBoard2/>} />
         <Route path="/songs2/:artistId" element={<ThemeBoard2/>} />
         <Route path="/artists" element={<ArtistBoard />} />
         <Route path="*" element={<NotFound />} />
