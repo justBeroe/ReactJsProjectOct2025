@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { RadioItem,type RadioStation } from '../radio-item/RadioItem';
+import { RadioItem, type RadioStation } from '../radio-item/RadioItem';
 import './radio-board.css';
 
 export const RadioBoard: React.FC = () => {
@@ -23,8 +23,14 @@ export const RadioBoard: React.FC = () => {
     <div className="theme-title">
       <div className="radio-board">
         {error && <p style={{ color: 'red' }}>{error}</p>}
-        {stations.map(station => (
-          <RadioItem key={station.stationuuid || station.name} station={station} />
+        {stations.map((station, index) => (
+          // ✅ FIX: Added `index` to the key to guarantee uniqueness
+          // Previously: key={station.stationuuid || station.name}
+          // Problem: Some stations had the same name (e.g. "France Inter"), causing duplicate keys
+          <RadioItem
+            key={`${station.stationuuid || station.name}-${index}`}
+            station={station}
+          />
         ))}
       </div>
     </div>
