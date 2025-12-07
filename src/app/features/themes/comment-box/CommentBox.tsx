@@ -1,93 +1,63 @@
-import React, { useEffect, useState } from 'react';
-import './comment-box.css';
-
-export interface Comment {
-  _id?: string;        // MongoDB ObjectId
-  text: string;
-  created_at: string;
-  userId?: string;
-  artistId?: number;
-}
+import React, { useState } from "react";
+import { useComments, type Comment } from "../../../core/services/useComments";
+import "./comment-box.css";
 
 interface CommentBoxProps {
   artistId: number;
 }
 
 export const CommentBox: React.FC<CommentBoxProps> = ({ artistId }) => {
-  const [comments, setComments] = useState<Comment[]>([]);
+  // Get current user from localStorage (like Angular version)
+  const userData = localStorage.getItem("currentUser");
+  const user = userData ? JSON.parse(userData) : null;
+  const userId = user?.id;
+
+  const { comments, loading, error, addComment, updateComment, deleteComment } =
+    useComments(artistId, userId);
+
+  const [commentText, setCommentText] = useState("");
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
-  const [commentText, setCommentText] = useState('');
-  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
 
-  // ✅ Load user + comments on mount
-  useEffect(() => {
-    const userData = localStorage.getItem('currentUser');
-    if (userData) {
-      try {
-        const user = JSON.parse(userData);
-        setCurrentUserId(user.id);
-      } catch {
-        setCurrentUserId(null);
-      }
-    }
-
-    if (!artistId || !currentUserId) return;
-
-    const stored = localStorage.getItem(storageKey(currentUserId, artistId));
-    setComments(stored ? JSON.parse(stored) : []);
-
-    // TODO: Replace with API call
-    // Example: CommentService.getByArtist(artistId, currentUserId)
-  }, [artistId, currentUserId]);
-
-  const storageKey = (userId: string, artistId: number) =>
-    `comments_${userId}_${artistId}`;
-
-  const saveToLocalStorage = (updated: Comment[]) => {
-    if (!currentUserId) return;
-    localStorage.setItem(storageKey(currentUserId, artistId), JSON.stringify(updated));
-  };
-
-  const addOrUpdateComment = () => {
-    if (!commentText.trim() || !currentUserId) return;
+  const handleAddOrUpdate = async () => {
+    const text = commentText.trim();
+    if (!text || !userId) return;
 
     if (editingIndex !== null) {
-      // ✅ Update existing comment
-      const updated = [...comments];
-      updated[editingIndex].text = commentText.trim();
-      setComments(updated);
-      saveToLocalStorage(updated);
+      const comment = comments[editingIndex];
+      if (comment._id) {
+        await updateComment(comment._id, text);
+      }
       setEditingIndex(null);
     } else {
-      // ✅ Create new comment
       const newComment: Comment = {
-        text: commentText.trim(),
+        text,
         created_at: new Date().toISOString(),
-        userId: currentUserId,
+        userId,
         artistId,
       };
-      const updated = [...comments, newComment];
-      setComments(updated);
-      saveToLocalStorage(updated);
+      await addComment(newComment);
     }
-
-    setCommentText('');
+    setCommentText("");
   };
 
-  const editComment = (index: number) => {
+  const handleEdit = (index: number) => {
     setEditingIndex(index);
     setCommentText(comments[index].text);
   };
 
-  const deleteComment = (index: number) => {
-    const updated = comments.filter((_, i) => i !== index);
-    setComments(updated);
-    saveToLocalStorage(updated);
+  const handleDelete = async (index: number) => {
+    const comment = comments[index];
+    if (comment._id) {
+      await deleteComment(comment._id);
+    }
     if (editingIndex === index) {
       setEditingIndex(null);
-      setCommentText('');
+      setCommentText("");
     }
   };
+
+  if (loading) return <p>Loading comments...</p>;
+  if (error) return <p className="error">{error}</p>;
 
   return (
     <div className="comment-box">
@@ -97,21 +67,21 @@ export const CommentBox: React.FC<CommentBoxProps> = ({ artistId }) => {
           onChange={e => setCommentText(e.target.value)}
           placeholder="Enter comment"
         />
-        <button onClick={addOrUpdateComment}>
-          {editingIndex !== null ? 'Update' : 'Add'}
+        <button onClick={handleAddOrUpdate}>
+          {editingIndex !== null ? "Update" : "Add"}
         </button>
       </div>
 
       <div className="comment-list">
-        {comments.map((comment, index) => (
-          <div key={index} className="comment-item">
+        {comments.map((comment, idx) => (
+          <div className="comment-item" key={comment._id || idx}>
             <div className="comment-text">{comment.text}</div>
             <div className="comment-date">
               <small>Added: {new Date(comment.created_at).toLocaleString()}</small>
             </div>
             <div className="comment-actions">
-              <button onClick={() => editComment(index)}>Edit</button>
-              <button onClick={() => deleteComment(index)}>Delete</button>
+              <button onClick={() => handleEdit(idx)}>Edit</button>
+              <button onClick={() => handleDelete(idx)}>Delete</button>
             </div>
           </div>
         ))}

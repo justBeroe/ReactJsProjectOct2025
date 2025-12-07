@@ -1,27 +1,27 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useSongs, deleteSong } from "../../../core/services/useSongs"; // ✅ useSongs + deleteSong
-import type { Song } from "../../../models/song.model";
-import { ThemeItem } from "../theme-item/ThemeItem"; // ✅ reuse ThemeItem for songs
+import { ArtistItem } from "../artist-item/ArtistItem";
+import type { Artist } from "../../../models/artist.model";
 import "./theme-board.css";
 
-interface ArtistBoardProps {
-  artistId?: number;
-}
-
-export const ArtistBoard: React.FC<ArtistBoardProps> = ({ artistId }) => {
-  const backendUrl = "http://localhost:4000";
-
-  // ✅ useSongs hook to fetch songs
-  const { songs: initialSongs, loading } = useSongs(artistId);
-
-  const [songs, setSongs] = useState<Song[]>(initialSongs);
+export const ArtistBoard: React.FC = () => {
+  const [deezerArtists, setDeezerArtists] = useState<Artist[]>([]);
+  const [jamendoArtists, setJamendoArtists] = useState<Artist[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
 
-  // ✅ sync local state when hook data changes
+  const backendUrl = "http://localhost:4000";
+
   useEffect(() => {
-    setSongs(initialSongs);
-  }, [initialSongs]);
+    axios.get<Artist[]>(`${backendUrl}/api/deezer-artists`).then(res => setDeezerArtists(res.data));
+    axios.get<Artist[]>(`${backendUrl}/api/jamen-artists`).then(res => setJamendoArtists(res.data));
+  }, []);
+
+  const filteredDeezer = deezerArtists.filter(a =>
+    a.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  const filteredJamendo = jamendoArtists.filter(a =>
+    a.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const fetchDeezerAll = async () => {
     try {
@@ -29,22 +29,15 @@ export const ArtistBoard: React.FC<ArtistBoardProps> = ({ artistId }) => {
         `${backendUrl}/api/fetch-deezer-all?start=1&end=100`
       );
       alert(`${res.data.message}\nTotal tracks: ${res.data.totalTracks}`);
-
-      // ✅ FIXED: re-fetch songs from DB and update state
-      const refreshed = await axios.get<Song[]>(`${backendUrl}/api/songs`);
-      setSongs(refreshed.data); // <-- this triggers React re-render
+      const refreshed = await axios.get<Artist[]>(`${backendUrl}/api/deezer-artists`);
+      setDeezerArtists(refreshed.data);
     } catch (err) {
-      console.error("Failed to fetch Deezer songs:", err);
-      alert("❌ Failed to fetch Deezer songs");
+      alert("❌ Failed to fetch Deezer artists");
     }
   };
 
   const deleteAllSongs = async () => {
-    if (
-      !window.confirm(
-        "⚠️ Are you sure you want to delete all songs? This cannot be undone."
-      )
-    ) {
+    if (!window.confirm("⚠️ Are you sure you want to delete all songs? This cannot be undone.")) {
       return;
     }
     try {
@@ -52,66 +45,38 @@ export const ArtistBoard: React.FC<ArtistBoardProps> = ({ artistId }) => {
         `${backendUrl}/api/delete-songs`
       );
       alert(`${res.data.message}\nDeleted count: ${res.data.deletedCount}`);
-
-      // ✅ clear local state so browser updates immediately
-      setSongs([]);
+      const refreshed = await axios.get<Artist[]>(`${backendUrl}/api/deezer-artists`);
+      setDeezerArtists(refreshed.data);
     } catch (err) {
-      console.error("Failed to delete songs:", err);
       alert("❌ Failed to delete songs");
     }
   };
 
-  const handleSongDeleted = async (songId: number) => {
-    try {
-      await deleteSong(songId); // ✅ call helper
-      setSongs((prev) => prev.filter((s) => s._id !== songId)); // ✅ update local state
-    } catch (err) {
-      console.error("Failed to delete song:", err);
-    }
-  };
-
-  // ✅ filter songs by search term
-  const filteredSongs = songs.filter((s) =>
-    s.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  if (loading) return <p>Loading songs...</p>;
-
   return (
-    <div>
+    <div className="theme-board">
       <div className="fetch-btn-container">
-        <button onClick={fetchDeezerAll} className="fetch-btn">
-          Fetch Deezer Songs
-        </button>
-        <button onClick={deleteAllSongs} className="delete-btn">
-          Delete All Deezer Songs
-        </button>
-
+        <button onClick={fetchDeezerAll} className="fetch-btn">Fetch Deezer Artists</button>
+        <button onClick={deleteAllSongs} className="delete-btn">Delete All Deezer Songs</button>
         <input
           type="text"
-          placeholder="Search songs..."
+          placeholder="Search artists..."
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && setSearchTerm(searchTerm)}
+          onChange={e => setSearchTerm(e.target.value)}
+          onKeyDown={e => e.key === "Enter" && setSearchTerm(searchTerm)}
           className="search-input"
         />
-        <button
-          onClick={() => setSearchTerm(searchTerm)}
-          className="search-btn"
-        >
-          Search
-        </button>
+        <button onClick={() => setSearchTerm(searchTerm)} className="search-btn">Search Deezer</button>
       </div>
 
-      <h2>Deezer Songs</h2>
-      <p>Filtered song count: {filteredSongs.length}</p>
-      {filteredSongs.map((song) => (
-        <ThemeItem
-          key={song._id}
-          song={song}
-          variant="compact"
-          onSongDeleted={handleSongDeleted} // ✅ pass delete callback
-        />
+      <h2>Deezer Artists</h2>
+      <p>Filtered Deezer count: {filteredDeezer.length}</p>
+      {filteredDeezer.map(artist => (
+        <ArtistItem key={artist.id} artist={artist} variant="compact" />
+      ))}
+
+      <h2>Jamendo Artists</h2>
+      {filteredJamendo.map(artist => (
+        <ArtistItem key={artist.id} artist={artist} variant="compact" />
       ))}
     </div>
   );
