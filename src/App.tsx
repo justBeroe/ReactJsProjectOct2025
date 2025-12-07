@@ -3,8 +3,8 @@ import { Login } from "./app/features/auth/login/Login";
 import { Register } from "./app/features/auth/register/Register";
 import { Footer, Header } from "./app/shared/components";
 
-import { Route, Routes } from 'react-router'
-import { AuthProvider } from './app/core/services/AuthService';
+import { Route, Routes } from "react-router";
+import { AuthProvider } from "./app/core/services/AuthService";
 import { Profile } from "./app/features/profile/Profile";
 import { Home } from "./app/features/home/Home";
 import { RadioBoard } from "./app/features/themes/radio-board/RadioBoard";
@@ -14,36 +14,38 @@ import { NewTheme } from "./app/features/themes/new-theme/NewTheme";
 import { NewTheme2 } from "./app/features/themes/new-song2/NewTheme2";
 import { ArtistBoard } from "./app/features/themes/artist-board/ArtistBoard";
 import { NotFound } from "./app/shared/components/not-found/NotFound";
+import { RequireAuth } from "./app/core/services/RequireAuth";
+import { Outlet } from "react-router-dom";
 
 function App() {
   return (
     <>
- <AuthProvider>
+      <AuthProvider>
+        <Header />
+        <Routes>
+          {/* Public routes */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/home" element={<Home />} />
 
-     <Header />
-      <Routes>
-        <Route path='/login' element={<Login />} />
-        <Route path='/register' element={<Register />} />
-        <Route path='/profile' element={<Profile />} />
-        <Route path='/home' element={<Home />} />
-        <Route path='/radio' element={<RadioBoard />} />
-        <Route path='/songs' element={<ThemeBoard />} />
-        {/* <Route path='/songs2' element={<ThemeBoard2 />} /> */}
-        <Route path='/change-song' element={<NewTheme />} />
-        <Route path='/change-song2' element={<NewTheme2 />} />
-         {/* ✅ Route for songs by artistId */}
-        <Route path="/songs/:artistId" element={<ThemeBoard/>} />
-        <Route path="/songs2" element={<ThemeBoard2/>} />
-        <Route path="/songs2/:artistId" element={<ThemeBoard2/>} />
-        <Route path="/artists" element={<ArtistBoard />} />
-        <Route path="*" element={<NotFound />} />
+          {/* Protected group */}
+          <Route element={<RequireAuth><Outlet /></RequireAuth>}>
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/songs" element={<ThemeBoard />} />
+            <Route path="/songs/:artistId" element={<ThemeBoard />} />
+            <Route path="/songs2" element={<ThemeBoard2 />} />
+            <Route path="/songs2/:artistId" element={<ThemeBoard2 />} />
+            <Route path="/change-song" element={<NewTheme />} />
+            <Route path="/change-song2" element={<NewTheme2 />} />
+            <Route path="/artists" element={<ArtistBoard />} />
+            <Route path="/radio" element={<RadioBoard />} />
+          </Route>
 
-          
-      </Routes>
-
-      <Footer />
-
- </AuthProvider>
+          {/* Catch-all */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+        <Footer />
+      </AuthProvider>
     </>
   );
 }
