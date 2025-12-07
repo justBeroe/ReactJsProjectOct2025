@@ -69,4 +69,9 @@ Part 5
 Login and register was fixed.
 user-login-api folder contains registerin and loginin APIs with mongodb.
 
+Part 6 Requrement done [App.tsx]: Implement client-side routing to at least 5 pages (at least 2 with parameters)
+
+<Route path="/songs/:artistId" element={<ThemeBoard />} />
+<Route path="/songs2/:artistId" element={<ThemeBoard2 />} />
+
 
