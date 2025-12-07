@@ -59,12 +59,19 @@ a {
 
 .nav-list {
   display: flex;
-  flex-wrap: nowrap;            /* ✅ keep everything in one row */
+  flex-wrap: wrap;            /* ✅ keep everything in one row */
            /* ✅ prevent scrollbars */
-  justify-content: center;
+  /* justify-content: center; */
   list-style: none;
   margin: 60px;
-  padding: 0;
+  padding: 0; 
+  overflow-x: visible;             /* ✅ allow horizontal scroll on small screens */
+  justify-content: flex-start;  /* ✅ align items to the left */
+  scrollbar-width: none;        /* ✅ hide scrollbar in Firefox */
+}
+
+.nav-list::-webkit-scrollbar {
+  display: none;                /* ✅ hide scrollbar in Chrome/Safari */
 }
 
 .nav-list li {
