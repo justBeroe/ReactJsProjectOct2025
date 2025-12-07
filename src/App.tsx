@@ -13,6 +13,7 @@ import { ThemeBoard2 } from "./app/features/themes/song2-board/ThemeBoard2";
 import { NewTheme } from "./app/features/themes/new-theme/NewTheme";
 import { NewTheme2 } from "./app/features/themes/new-song2/NewTheme2";
 import { ArtistBoard } from "./app/features/themes/artist-board/ArtistBoard";
+import { NotFound } from "./app/shared/components/not-found/NotFound";
 
 function App() {
   return (
@@ -34,13 +35,9 @@ function App() {
         <Route path="/songs/:artistId" element={<ThemeBoard/>} />
         <Route path="/songs2/:artistId" element={<ThemeBoard2/>} />
         <Route path="/artists" element={<ArtistBoard />} />
+        <Route path="*" element={<NotFound />} />
 
-            {/* <li><Link to="/songs">Deezer Songs</Link></li>
-              <li><Link to="/songs2">Jamendo Songs</Link></li>
-              <li><Link to="/change-song">New Deezer Artist</Link></li>
-              <li><Link to="/change-song2">New Jamendo Artist</Link></li>
-              <li><Link to="/artists">All Artists</Link></li>
-              <li><Link to="/radio">Radio mix</Link></li> */}
+          
       </Routes>
 
       <Footer />
