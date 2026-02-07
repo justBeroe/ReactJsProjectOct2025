@@ -10,7 +10,7 @@ app.use(express.json());
 
 // Connect to MongoDB
 // mongoose.connect('mongodb://localhost:27017/deezerDB', {
-mongoose.connect('mongodb+srv://beroe:beroe@beroecluster1.7pneahu.mongodb.net', {
+mongoose.connect('mongodb+srv://beroe:beroe@beroecluster1.7pneahu.mongodb.net/deezerDB', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
