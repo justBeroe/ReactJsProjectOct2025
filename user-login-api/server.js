@@ -9,7 +9,8 @@ app.use(cors());
 app.use(express.json());
 
 // MongoDB connection
-mongoose.connect('mongodb://localhost:27017/userdb', {
+// mongoose.connect('mongodb://localhost:27017/userdb', {
+mongoose.connect('mongodb+srv://beroe:beroe@beroecluster1.7pneahu.mongodb.net', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
